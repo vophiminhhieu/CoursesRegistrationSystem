@@ -1,5 +1,14 @@
 package GraphicalUserInterface;
 
+/*
+         800
+    |----------|
+600 |          | 600    ===>  Location: (200,50)
+    |----------|
+         800
+*/
+
+
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
