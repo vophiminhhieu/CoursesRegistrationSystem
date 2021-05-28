@@ -3,13 +3,16 @@ package BUS;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Application.Data;
 import DAL.DAO.UserDao;
 import DAL.POJO.User;
 import GUI.LoginFrame;
+import GUI.MenuFrame;
 
 public class Login {
 	LoginFrame fr;
 	UserDao userDao=new UserDao();
+	Data data = new Data();
 	private ActionListener actionListenerLogin = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(!fr.isRobotIsCheck) {
@@ -17,7 +20,10 @@ public class Login {
 			}
 			else {
 				if(checkLogin(fr.getUsername(),fr.getPassword())==1){
-					System.out.print("Success");
+					fr.setVisible(false);
+					MenuFrame mnfr=new MenuFrame();
+					data.id=Long.parseLong(fr.getUsername());
+					data.pass=fr.getPassword();
 				}
 			}
 			
@@ -55,6 +61,5 @@ public class Login {
 		fr=new LoginFrame();
 		fr.eventLoginButton(actionListenerLogin);
 		fr.eventMissingButton(actionListenerMissing);
-		userDao.prepare();
 	}
 }

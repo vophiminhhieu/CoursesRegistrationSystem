@@ -16,7 +16,6 @@ public class UserDao {
 		Transaction transaction=null;
 		try(Session session = UserUtil.getSessionFactory().openSession()){
 			transaction=session.beginTransaction();
-			
 		}
 		catch(Exception e) {
 			if(transaction!=null) {
