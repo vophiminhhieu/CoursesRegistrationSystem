@@ -11,10 +11,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MenuFrame extends JFrame {
+import Application.Data;
 
+public class MenuFrame extends JFrame {
+	private Data data=new Data();
     private JPanel contentPanel = paintToPanel("image/Menu/background.png");
+    private JPanel CenterPanel= paintToPanel("image/Menu/centerPanel.png");
     private JPanel dashboardCenterPanel = new DashboardPanel();
+    private JPanel teacherCenterPanel = new TeacherPanel();
+    private JPanel studentCenterPanel = new StudentPanel();
+    private JPanel manageCenterPanel = new ManagePanel();
     private JPanel dashboardPanel = paintToPanel("image/Menu/dashboardIcon.png");
     private JPanel teacherPanel = paintToPanel("image/Menu/teacherIcon.png");
     private JPanel studentPanel = paintToPanel("image/Menu/studentIcon.png");
@@ -51,21 +57,31 @@ public class MenuFrame extends JFrame {
     	studentBtn.setIcon(studentBtnImageLight);		studentPanel.setVisible(false);
     	manageBtn.setIcon(manageBtnImageLight);			managePanel.setVisible(false);
     }
+    private void removeCenterPanel() {
+    	CenterPanel.remove(dashboardCenterPanel);	CenterPanel.remove(teacherCenterPanel);
+    	CenterPanel.remove(studentCenterPanel);		CenterPanel.remove(manageCenterPanel);
+    }
     private ActionListener LightDarkButton = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			setFullLight();
 			if(e.getActionCommand()=="dashboard") {
+				removeCenterPanel();	CenterPanel.add(dashboardCenterPanel);	setFullLight();
 				dashboardBtn.setIcon(dashboardBtnImage);	dashboardPanel.setVisible(true);
 			}
 			else if(e.getActionCommand()=="teacher") {
-				teacherBtn.setIcon(teacherBtnImage);		teacherPanel.setVisible(true);
+				if(data.getRole().equals("Giao vien")){
+					removeCenterPanel();	CenterPanel.add(teacherCenterPanel);	setFullLight();
+					teacherBtn.setIcon(teacherBtnImage);		teacherPanel.setVisible(true);
+				}
 			}
 			else if(e.getActionCommand()=="student") {
-				studentBtn.setIcon(studentBtnImage);		studentPanel.setVisible(true);
+				removeCenterPanel();	CenterPanel.add(studentCenterPanel);
+				setFullLight();	studentBtn.setIcon(studentBtnImage);		studentPanel.setVisible(true);
 			}
 			else if(e.getActionCommand()=="manage") {
-				manageBtn.setIcon(manageBtnImage);			managePanel.setVisible(true);
+				removeCenterPanel();	CenterPanel.add(manageCenterPanel);
+				setFullLight();	manageBtn.setIcon(manageBtnImage);			managePanel.setVisible(true);
 			}
+			CenterPanel.setVisible(false);	CenterPanel.setVisible(true);
 		}
 	};
     public void eventLightButton(ActionListener obj) {
@@ -75,6 +91,7 @@ public class MenuFrame extends JFrame {
     	manageBtn.addActionListener(obj);
     }
 	private void prepareGUI() {
+		CenterPanel.setBounds(45,237,713,295);
         setTitle("CoursesRegistrationSystem"); setSize(800,600); setLayout(null);	
         setLocation(200,50); setResizable(false); setDefaultCloseOperation(EXIT_ON_CLOSE);
         Image icon = Toolkit.getDefaultToolkit().getImage("image/icon.png");  setIconImage(icon);	
@@ -88,7 +105,7 @@ public class MenuFrame extends JFrame {
 	}
 	public MenuFrame() {
 		prepareGUI();
-		setContentPane(contentPanel);	add(dashboardCenterPanel);
+		setContentPane(contentPanel);	CenterPanel.add(dashboardCenterPanel);	add(CenterPanel);
 		add(dashboardBtn);		add(teacherBtn);	add(studentBtn);	add(manageBtn); 	
 		add(dashboardPanel);	add(teacherPanel);	add(studentPanel);	add(managePanel);
 		eventLightButton(LightDarkButton);

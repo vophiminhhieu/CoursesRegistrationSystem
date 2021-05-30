@@ -8,10 +8,12 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import DAL.POJO.Student;
+import DAL.POJO.Teacher;
 import DAL.POJO.User;
 import DAL.UTIL.UserUtil;
 
-public class UserDao {
+public class TeacherDao {
 	public void prepare() {
 		Transaction transaction=null;
 		try(Session session = UserUtil.getSessionFactory().openSession()){
@@ -24,17 +26,17 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
-	public void saveUser(User user) {
+	public void saveTeacher(Teacher teacher) {
 		Transaction transaction = null;
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
 			// start a transaction
 			transaction = session.beginTransaction();
 			
 			// operation 1
-			Object object = session.save(user);
+			Object object = session.save(teacher);
 			
 			// operation 2
-			session.get(User.class, (Serializable) object);
+			session.get(Teacher.class, (Serializable) object);
 			
 			// commit transaction
 			transaction.commit();
@@ -46,7 +48,7 @@ public class UserDao {
 		}
 	}
 
-	public void deleteUser(long id) {
+	public void deleteTeacher(long id) {
 
 		Transaction transaction = null;
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
@@ -54,11 +56,11 @@ public class UserDao {
 			transaction = session.beginTransaction();
 
 			// Delete a student object
-			User user = session.get(User.class, id);
-			if (user != null) {
-				String hql = "DELETE FROM User " + "WHERE id = :userId";
+			Teacher teacher = session.get(Teacher.class, id);
+			if (teacher != null) {
+				String hql = "DELETE FROM Teacher " + "WHERE id = :teacherId";
 				Query query = session.createQuery(hql);
-				query.setParameter("userId", id);
+				query.setParameter("teacherId", id);
 				int result = query.executeUpdate();
 				System.out.println("Rows affected: " + result);
 			}
@@ -73,22 +75,22 @@ public class UserDao {
 		}
 	}
 
-	public User getUser(long id) {
+	public Teacher getTeacher(long id) {
 
 		Transaction transaction = null;
-		User user = null;
+		Teacher teacher = null;
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
 			// start a transaction
 			transaction = session.beginTransaction();
 
 			// get an student object
-			String hql = " FROM User S WHERE S.id = :userId";
+			String hql = " FROM Teacher S WHERE S.id = :teacherId";
 			Query query = session.createQuery(hql);
-			query.setParameter("userId", id);
+			query.setParameter("teacherId", id);
 			List results = query.getResultList();
 			
 			if (results != null && !results.isEmpty()) {
-				user = (User) results.get(0);
+				teacher = (Teacher) results.get(0);
 			}
 			// commit transaction
 			transaction.commit();
@@ -98,12 +100,12 @@ public class UserDao {
 			}
 			e.printStackTrace();
 		}
-		return user;
+		return teacher;
 	}
 
-	public List<User> getUser() {
+	public List<Teacher> getTeacher() {
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
-			return session.createQuery("from User", User.class).list();
+			return session.createQuery("from Teacher", Teacher.class).list();
 		}
 	}
 }

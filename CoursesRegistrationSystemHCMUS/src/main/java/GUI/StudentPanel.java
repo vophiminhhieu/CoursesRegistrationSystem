@@ -1,5 +1,7 @@
 package GUI;
 
-public class StudentPanel {
+import javax.swing.JPanel;
+
+public class StudentPanel extends JPanel {
 
 }
