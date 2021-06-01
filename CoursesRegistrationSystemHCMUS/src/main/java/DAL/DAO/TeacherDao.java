@@ -2,6 +2,7 @@ package DAL.DAO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.persistence.Query;
 
@@ -107,5 +108,26 @@ public class TeacherDao {
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
 			return session.createQuery("from Teacher", Teacher.class).list();
 		}
+	}
+	public String[][] getListTeacher(){
+		List<Teacher> tea = getTeacher();
+		String[][] res = new String[tea.size()][10];
+		ListIterator<Teacher> itr=tea.listIterator();
+		int index=0;
+		while(itr.hasNext()) {
+			Teacher teacher = itr.next();
+			res[index][0]=String.valueOf(teacher.getId());
+			res[index][1]=teacher.getName();
+			res[index][2]=teacher.getBirthDate();
+			res[index][3]=teacher.getBirthPlace();
+			res[index][4]=teacher.getSex();
+			res[index][5]=teacher.getEmail();
+			res[index][6]=teacher.getAddress();
+			res[index][7]=teacher.getPhone();
+			res[index][8]=teacher.getMajor();
+			res[index][9]=teacher.getStartDate();
+			index++;
+		}
+		return res;
 	}
 }

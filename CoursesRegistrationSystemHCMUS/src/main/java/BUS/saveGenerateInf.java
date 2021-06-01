@@ -36,6 +36,22 @@ public class saveGenerateInf {
 		this.startDate = startDate;
 	}
 	
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
 	public saveGenerateInf() {
 		super();
 		// TODO Auto-generated constructor stub

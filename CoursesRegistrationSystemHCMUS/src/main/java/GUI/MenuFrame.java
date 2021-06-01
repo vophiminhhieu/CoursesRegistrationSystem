@@ -74,8 +74,10 @@ public class MenuFrame extends JFrame {
 				}
 			}
 			else if(e.getActionCommand()=="student") {
-				removeCenterPanel();	CenterPanel.add(studentCenterPanel);
-				setFullLight();	studentBtn.setIcon(studentBtnImage);		studentPanel.setVisible(true);
+				if(data.getRole().equals("Sinh vien")) {
+					removeCenterPanel();	CenterPanel.add(studentCenterPanel);
+					setFullLight();	studentBtn.setIcon(studentBtnImage);		studentPanel.setVisible(true);
+				}
 			}
 			else if(e.getActionCommand()=="manage") {
 				removeCenterPanel();	CenterPanel.add(manageCenterPanel);
