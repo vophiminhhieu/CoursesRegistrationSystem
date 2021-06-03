@@ -5,9 +5,11 @@ import java.awt.event.ActionListener;
 
 import Application.Data;
 import DAL.DAO.StudentDao;
+import DAL.DAO.SubjectDao;
 import DAL.DAO.TeacherDao;
 import DAL.DAO.UserDao;
 import DAL.POJO.Student;
+import DAL.POJO.Subject;
 import DAL.POJO.Teacher;
 import DAL.POJO.User;
 import GUI.LoginFrame;
@@ -28,6 +30,7 @@ public class Login {
 					MenuFrame mnfr=new MenuFrame();
 					data.id=Long.parseLong(fr.getUsername());
 					data.pass=fr.getPassword();
+					SubjectDao subjectDao = new SubjectDao();
 				}
 			}
 			

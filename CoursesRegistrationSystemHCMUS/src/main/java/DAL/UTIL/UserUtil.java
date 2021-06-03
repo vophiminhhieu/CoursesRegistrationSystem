@@ -10,6 +10,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 import DAL.POJO.Student;
+import DAL.POJO.Subject;
 import DAL.POJO.Teacher;
 import DAL.POJO.User;
 public class UserUtil {
@@ -38,6 +39,7 @@ public class UserUtil {
 				configuration.addAnnotatedClass(User.class);
 				configuration.addAnnotatedClass(Student.class);
 				configuration.addAnnotatedClass(Teacher.class);
+				configuration.addAnnotatedClass(Subject.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();

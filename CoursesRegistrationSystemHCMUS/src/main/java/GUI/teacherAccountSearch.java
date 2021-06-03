@@ -23,21 +23,27 @@ import javax.swing.WindowConstants;
 
 import BUS.saveGenerateInf;
 import DAL.DAO.TeacherDao;
+import DAL.DAO.UserDao;
 import DAL.POJO.Teacher;
+import DAL.POJO.User;
 
 
 public class teacherAccountSearch extends JPanel {
 
 	private ImageIcon background = new ImageIcon("image/Menu/leftCenterPanel.png");
-	private Icon backIcon = new ImageIcon("image/Menu/Dashboard/userAccount/back.png");
+	private Icon backIcon = new ImageIcon("image/Menu/Teacher/Account/backsmall.png");
 	private JButton backBtn = new JButton(backIcon);
 	private JTextField textSearch = new JTextField();
 	private JPanel textPanel = new JPanel(new BorderLayout());
 	private JLabel label = new JLabel("Input Teacher ID : ");
 	private Icon searchIcon = new ImageIcon("image/Menu/Teacher/Account/searchicon.png");
 	private JButton searchBtn = new JButton(searchIcon);
-	private Icon editIcon = new ImageIcon("image/Menu/Dashboard/myProfile/edit.png");
+	private Icon editIcon = new ImageIcon("image/Menu/Teacher/Account/editsmall.png");
 	private JButton editBtn = new JButton(editIcon);
+	private Icon removeIcon = new ImageIcon("image/Menu/Teacher/Account/removesmall.png");
+	private JButton removeBtn = new JButton(removeIcon);
+	private Icon resetIcon = new ImageIcon("image/Menu/Teacher/Account/resetsmall.png");
+	private JButton resetBtn = new JButton(resetIcon);
 	private JLabel id = new JLabel();				
 	private JLabel nameLabel 		= new JLabel();	private JLabel birthDateLabel 	= new JLabel();
 	private JLabel birthPlaceLabel  = new JLabel();	private JLabel sexLabel 		= new JLabel();
@@ -64,7 +70,7 @@ public class teacherAccountSearch extends JPanel {
 		}
 	}
 	private void prepareGUI() {
-		backBtn.setBounds(285, 10, 95, 29);		backBtn.setActionCommand("Back");		searchBtn.setBounds(260,10,20,20);	error1.setForeground(Color.red);	error.setForeground(Color.red);
+		backBtn.setBounds(290, 10, 67, 21);		backBtn.setActionCommand("Back");		searchBtn.setBounds(260,10,20,20);	error1.setForeground(Color.red);	error.setForeground(Color.red);
 		textPanel.add(textSearch);	textPanel.setBounds(155,10,100,20);			label.setFont(new Font("Verdana", Font.PLAIN, 14));	label.setBounds(0,10,150,20);
 		id.setBounds(10,35,300,20);	nameLabel.setBounds(10,60,300,20);	birthDateLabel.setBounds(10,85,300,20);	birthPlaceLabel.setBounds(10,110,300,20);
 		sexLabel.setBounds(10,135,300,20);	addressLabel.setBounds(10,160,300,20);	phoneLabel.setBounds(10,185,300,20);	emailLabel.setBounds(10,210,300,20);
@@ -75,7 +81,8 @@ public class teacherAccountSearch extends JPanel {
 		nameEditPanel.add(nameEdit);	birthDateEditPanel.add(birthDateEdit);	
 		birthPlaceEditPanel.add(birthPlaceEdit);							sexEditPanel.add(sexEdit);	
 		addressEditPanel.add(addressEdit);	phoneEditPanel.add(phoneEdit);	emailEditPanel.add(emailEdit);
-		majorEditPanel.add(majorEdit);		startDateEditPanel.add(startDateEdit);		editBtn.setBounds(390,10,95,29);
+		majorEditPanel.add(majorEdit);		startDateEditPanel.add(startDateEdit);		editBtn.setBounds(370,10,67,21);
+		removeBtn.setBounds(290,35,67,21); 	resetBtn.setBounds(370,35,89,21);
 	}
 	private void setTextAllNull() {
 		id.setText("");	nameLabel.setText("");	birthDateLabel.setText("");	birthPlaceLabel.setText("");	sexLabel.setText("");
@@ -111,6 +118,45 @@ public class teacherAccountSearch extends JPanel {
 			set(textSearch.getText());
 		}
 	};
+	private ActionListener actionChangeRemove = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			long _key;
+			try {
+				_key=Long.parseLong(textSearch.getText());
+			}
+			catch(Exception exp) {return;
+			}
+			JTeacher=teacher.getTeacher(_key);
+			if(JTeacher!=null) {
+				teacher.deleteTeacher(_key);
+				UserDao userDao=new UserDao();
+				userDao.deleteUser(_key);
+				showAll(false);
+			}
+		}
+	};
+	private ActionListener actionChangeReset = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			long _key;
+			try {
+				_key=Long.parseLong(textSearch.getText());
+			}
+			catch(Exception exp) {return;
+			}
+			UserDao userDao = new UserDao();
+			User user = new User();
+			user=userDao.getUser(_key);
+			if(user!=null) {
+				user.setPassword("123456");
+			}
+			Teacher tmp = teacher.getTeacher(_key);
+			teacher.deleteTeacher(_key);
+			userDao.deleteUser(_key);
+			userDao.saveUser(user);
+			teacher.saveTeacher(tmp);
+		}
+	};
+	
 	private void save() {
 		JTeacher.setName(nameEdit.getText());		JTeacher.setBirthDate(birthDateEdit.getText());		JTeacher.setBirthPlace(birthPlaceEdit.getText());
 		JTeacher.setSex(sexEdit.getText());		JTeacher.setPhone(phoneEdit.getText());		JTeacher.setEmail(emailEdit.getText());
@@ -171,6 +217,7 @@ public class teacherAccountSearch extends JPanel {
 		searchBtn.addActionListener(actionChangeSearch);	add(editBtn); editBtn.addActionListener(actionChangeEdit);
 		add(nameEditPanel); add(birthDateEditPanel); add(birthPlaceEditPanel); add(sexEditPanel); add(phoneEditPanel);
 		add(addressEditPanel); add(emailEditPanel); add(startDateEditPanel); add(majorEditPanel);	showAll(false);
-		add(error);	add(error1); error.setVisible(false);error1.setVisible(false);
+		add(error);	add(error1); error.setVisible(false);error1.setVisible(false);	add(removeBtn);	add(resetBtn);
+		removeBtn.addActionListener(actionChangeRemove); resetBtn.addActionListener(actionChangeReset);
 	}
 }
