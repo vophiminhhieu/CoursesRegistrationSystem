@@ -2,12 +2,18 @@ package BUS;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import Application.Data;
+import DAL.DAO.ClassDao;
+import DAL.DAO.JoinClassDao;
+import DAL.DAO.SemesterDao;
 import DAL.DAO.StudentDao;
 import DAL.DAO.SubjectDao;
 import DAL.DAO.TeacherDao;
 import DAL.DAO.UserDao;
+import DAL.POJO.Semester;
+import DAL.POJO.Semester.Pk;
 import DAL.POJO.Student;
 import DAL.POJO.Subject;
 import DAL.POJO.Teacher;
@@ -30,7 +36,8 @@ public class Login {
 					MenuFrame mnfr=new MenuFrame();
 					data.id=Long.parseLong(fr.getUsername());
 					data.pass=fr.getPassword();
-					SubjectDao subjectDao = new SubjectDao();
+					ClassDao dao = new ClassDao();
+					dao.deleteClasss("CTT1");
 				}
 			}
 			

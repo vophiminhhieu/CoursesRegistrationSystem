@@ -9,6 +9,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import DAL.POJO.JoinClass;
+import DAL.POJO.Classs;
+import DAL.POJO.Semester;
+import DAL.POJO.SemesterStatic;
 import DAL.POJO.Student;
 import DAL.POJO.Subject;
 import DAL.POJO.Teacher;
@@ -40,6 +44,10 @@ public class UserUtil {
 				configuration.addAnnotatedClass(Student.class);
 				configuration.addAnnotatedClass(Teacher.class);
 				configuration.addAnnotatedClass(Subject.class);
+				configuration.addAnnotatedClass(Semester.class);
+				configuration.addAnnotatedClass(SemesterStatic.class);
+				configuration.addAnnotatedClass(Classs.class);
+				configuration.addAnnotatedClass(JoinClass.class);
 
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();
