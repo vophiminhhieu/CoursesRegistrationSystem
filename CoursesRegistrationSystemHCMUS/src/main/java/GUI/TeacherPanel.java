@@ -31,6 +31,9 @@ public class TeacherPanel extends JPanel {
     private JPanel teacher_Subject = new JPanel();
     private JPanel teacher_Semester = new JPanel();
     private JPanel teacher_Class = new JPanel();
+    private JPanel teacher_Student = new JPanel();
+    private JPanel teacher_Registration = new JPanel();
+    private JPanel teacher_Course = new JPanel();
 	@Override
     protected void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -103,12 +106,53 @@ public class TeacherPanel extends JPanel {
 			setVisible(false);		setVisible(true);
 		}
 	};
+	private ActionListener actionChangeStudent = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("Back")) {	remove(teacher_Student);	add(leftCenterPanel);	}
+			else if(e.getActionCommand().equals("show")) {	remove(leftCenterPanel);	remove(teacher_Student);
+			teacher_Student = new teacherStudentShow(actionChangeStudent);	add(teacher_Student); }
+			else if(e.getActionCommand().equals("add")) {	remove(leftCenterPanel);	remove(teacher_Student);
+			teacher_Student = new teacherStudentAdd(actionChangeStudent);		add(teacher_Student);}
+			else if(e.getActionCommand().equals("set")) {	remove(leftCenterPanel);	remove(teacher_Student);
+			teacher_Student = new teacherStudentSet(actionChangeStudent);	add(teacher_Student);	}
+			else if(e.getActionCommand().equals("edit")) {	remove(leftCenterPanel);	remove(teacher_Student);
+			teacher_Student = new teacherStudentEdit(actionChangeStudent);	add(teacher_Student);	}
+			else if(e.getActionCommand().equals("pass")) {	remove(leftCenterPanel);	remove(teacher_Student);
+			teacher_Student = new teacherStudentPass(actionChangeStudent);	add(teacher_Student);	}
+			setVisible(false);		setVisible(true);
+		}
+	};
+	private ActionListener actionChangeRegistration = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("Back")) {	remove(teacher_Registration);	add(leftCenterPanel);	}
+			else if(e.getActionCommand().equals("show")) {	remove(leftCenterPanel);	remove(teacher_Registration);
+			teacher_Registration = new teacherRegistrationShow(actionChangeRegistration);	add(teacher_Registration); }
+			else if(e.getActionCommand().equals("add")) {	remove(leftCenterPanel);	remove(teacher_Registration);
+			teacher_Registration = new teacherRegistrationAdd(actionChangeRegistration);		add(teacher_Registration);}
+			setVisible(false);		setVisible(true);
+		}
+	};
+	private ActionListener actionChangeCourse = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("Back")) {	remove(teacher_Course);	add(leftCenterPanel);	}
+			else if(e.getActionCommand().equals("show")) {	remove(leftCenterPanel);	remove(teacher_Course);
+			teacher_Course = new teacherCourseShow(actionChangeCourse);	add(teacher_Course); }
+			else if(e.getActionCommand().equals("add")) {	remove(leftCenterPanel);	remove(teacher_Course);
+			teacher_Course = new teacherCourseAdd(actionChangeCourse);		add(teacher_Course);}
+			else if(e.getActionCommand().equals("find")) {	remove(leftCenterPanel);	remove(teacher_Course);
+			teacher_Course = new teacherCourseFind(actionChangeCourse);		add(teacher_Course);}
+			setVisible(false);		setVisible(true);
+		}
+	};
 	
 
     private JPanel rightCenterPanelAccount = new rightCenterPanelTeacher_Account(actionChangeAccount);
     private JPanel rightCenterPanelSubject = new rightCenterPanelTeacher_Subject(actionChangeSubject);
     private JPanel rightCenterPanelSemester = new rightCenterPanelTeacher_Semester(actionChangeSemester);
     private JPanel rightCenterPanelClass = new rightCenterPanelTeacher_Class(actionChangeClass);
+    private JPanel rightCenterPanelStudent = new rightCenterPanelTeacher_Student(actionChangeStudent);
+    private JPanel rightCenterPanelRegistration = new rightCenterPanelTeacher_Registration(actionChangeRegistration);
+    private JPanel rightCenterPanelCourse = new rightCenterPanelTeacher_Course(actionChangeCourse);
 	private ActionListener actionChangeButton = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("Account")) {
@@ -123,6 +167,16 @@ public class TeacherPanel extends JPanel {
 			else if(e.getActionCommand().equals("Class")) {
 				removeAllPanel();	rightCenterPanel.add(rightCenterPanelClass);
 			}
+			else if(e.getActionCommand().equals("Student")) {
+				removeAllPanel();	rightCenterPanel.add(rightCenterPanelStudent);
+			}
+			else if(e.getActionCommand().equals("Registration")) {
+				removeAllPanel();	rightCenterPanel.add(rightCenterPanelRegistration);
+			}
+			else if(e.getActionCommand().equals("Course")) {
+				removeAllPanel();	rightCenterPanel.add(rightCenterPanelCourse);
+			}
+			
 			rightCenterPanel.setVisible(false);
 			rightCenterPanel.setVisible(true);
 		}
@@ -132,6 +186,9 @@ public class TeacherPanel extends JPanel {
 		rightCenterPanel.remove(rightCenterPanelSubject);
 		rightCenterPanel.remove(rightCenterPanelSemester);
 		rightCenterPanel.remove(rightCenterPanelClass);
+		rightCenterPanel.remove(rightCenterPanelStudent);
+		rightCenterPanel.remove(rightCenterPanelRegistration);
+		rightCenterPanel.remove(rightCenterPanelCourse);
 	}
 	private void prepareGUI() {
 		setLayout(null);	setBounds(0,0,713,295);	

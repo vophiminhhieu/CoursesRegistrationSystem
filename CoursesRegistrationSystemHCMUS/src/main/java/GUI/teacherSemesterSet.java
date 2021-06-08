@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import DAL.DAO.RegistrationDao;
 import DAL.DAO.SemesterDao;
 import DAL.DAO.SemesterStaticDao;
 import DAL.DAO.SubjectDao;
@@ -28,6 +29,7 @@ import DAL.POJO.Subject;
 import DAL.POJO.Teacher;
 import DAL.POJO.User;
 import DAL.POJO.Semester.Pk;
+import DAL.POJO.Registration;
 import DAL.POJO.SemesterStatic;
 
 public class teacherSemesterSet extends JPanel {
@@ -101,6 +103,11 @@ public class teacherSemesterSet extends JPanel {
 				error.setText("This semester is now !!");
 			}
 			else {
+				RegistrationDao resDao = new RegistrationDao();
+				Registration.Pk resPk = new Registration.Pk();
+				resPk.setName(semester.getPk().getName());
+				resPk.setYear(semester.getPk().getYear());
+				resDao.deleteRegistration(resPk);
 				semesterDao.deleteSemester(semester.getPk());
 				error.setText("Remove Success !!");
 			}
@@ -111,7 +118,8 @@ public class teacherSemesterSet extends JPanel {
 			semesterStaticDao.deleteSemesterStatic(semesterStaticDao.getSemesterStatic().get(0).getPk());
 			SemesterStatic semesterStatic = new SemesterStatic(semester.getPk(),semester.getStart_Date(),semester.getEnd_Date());
 			semesterStaticDao.saveSemesterStatic(semesterStatic);
-			
+			RegistrationDao daoRe = new RegistrationDao();
+			daoRe.offAll();
 			error.setText("Set now semester Success !!");
 			
 		}

@@ -2,6 +2,7 @@ package DAL.DAO;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -14,6 +15,7 @@ import DAL.POJO.Classs;
 import DAL.POJO.JoinClass;
 import DAL.POJO.Semester;
 import DAL.POJO.Student;
+import DAL.POJO.Teacher;
 import DAL.POJO.JoinClass.Pk;
 import DAL.UTIL.UserUtil;
 
@@ -112,7 +114,18 @@ public class JoinClassDao {
 			return session.createQuery("from JoinClass",JoinClass.class).list();
 		}
 	}
-
+	public List<JoinClass> getJoinClass(String idClass) {
+		List<JoinClass> _class = getJoinClass();
+		ListIterator<JoinClass> itr=_class.listIterator();
+		List<JoinClass> res = new ArrayList<JoinClass>();
+		while(itr.hasNext()) {
+			JoinClass joinClass = itr.next();
+			if(joinClass.getPk().getIdClass().equals(idClass)&&joinClass.getDone()==false) {
+				res.add(joinClass);
+			}
+		}
+		return res;
+	}
 	public int[] getNumberStudent(String idClass) {
 		int[] nn = new int[2];
 		List<JoinClass> _class = getJoinClass();
@@ -139,4 +152,40 @@ public class JoinClassDao {
 		nn[1]=countFemale;
 		return nn;
 	}
+	
+	public List<Student> getStudent(String idClass){
+		List<JoinClass> _class = getJoinClass();
+		ListIterator<JoinClass> itr=_class.listIterator();
+		StudentDao studentDao = new StudentDao();
+		List<Student> std = new ArrayList<Student>();
+		while(itr.hasNext()) {
+			JoinClass joinClass = itr.next();
+			if(joinClass.getPk().getIdClass().equals(idClass)&&joinClass.getDone()) {
+				std.add(studentDao.getStudent(joinClass.getPk().getIdStudent()));
+			}
+		}
+		return std;
+	}
+	public String[][] getStringStudent(String idClass){
+		List<Student> tea = getStudent(idClass);
+		String[][] res = new String[tea.size()][10];
+		ListIterator<Student> itr=tea.listIterator();
+		int index=0;
+		while(itr.hasNext()) {
+			Student student = itr.next();
+			res[index][0]=String.valueOf(student.getId());
+			res[index][1]=student.getName();
+			res[index][2]=student.getBirthDate();
+			res[index][3]=student.getBirthPlace();
+			res[index][4]=student.getSex();
+			res[index][5]=student.getEmail();
+			res[index][6]=student.getAddress();
+			res[index][7]=student.getPhone();
+			res[index][8]=student.getMajor();
+			res[index][9]=student.getStartDate();
+			index++;
+		}
+		return res;
+	}
+	
 }

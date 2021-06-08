@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import DAL.POJO.Student;
 import DAL.POJO.User;
 import DAL.UTIL.UserUtil;
 
@@ -99,6 +100,36 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return user;
+	}
+	
+	public void updateUser(User std) {
+
+		Transaction transaction = null;
+		try (Session session = UserUtil.getSessionFactory().openSession()) {
+			// start a transaction
+			transaction = session.beginTransaction();
+
+			// Delete a student object
+			User stdi = session.get(User.class, std.getId());
+			if (stdi != null) {
+				String hql = "UPDATE User S Set "
+						+ " id = :id ,"
+						+ " password = :password " + "WHERE id = :id";
+				Query query = session.createQuery(hql);
+				query.setParameter("id", std.getId());
+				query.setParameter("password", std.getPassword());
+				int result = query.executeUpdate();
+				System.out.println("Rows affected: " + result);
+			}
+
+			// commit transaction
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
 	}
 
 	public List<User> getUser() {

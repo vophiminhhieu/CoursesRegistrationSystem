@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import DAL.POJO.Course;
 import DAL.POJO.Subject;
 import DAL.UTIL.UserUtil;
 
@@ -59,6 +60,8 @@ public class SubjectDao {
 			}
 			e.printStackTrace();
 		}
+		CourseDao dao = new CourseDao();
+		dao.deleteCourse(id);
 	}
 
 	public Subject getSubject(String id) {

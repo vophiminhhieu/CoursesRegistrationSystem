@@ -73,6 +73,50 @@ public class StudentDao {
 			e.printStackTrace();
 		}
 	}
+	public void updateStudent(Student std) {
+
+		Transaction transaction = null;
+		try (Session session = UserUtil.getSessionFactory().openSession()) {
+			// start a transaction
+			transaction = session.beginTransaction();
+
+			// Delete a student object
+			Student student = session.get(Student.class, std.getId());
+			if (student != null) {
+				String hql = "UPDATE Student S Set "
+						+ " name = :name ,"
+						+ " birthDate = :birthDate ,"
+						+ " birthPlace = :birthPlace ,"
+						+ " sex = :sex ,"
+						+ " phone = :phone ,"
+						+ " email = :email ,"
+						+ " address = :address ,"
+						+ " major = :major ,"
+						+ " startDate = :startDate " + "WHERE id = :id";
+				Query query = session.createQuery(hql);
+				query.setParameter("id", std.getId());
+				query.setParameter("name", std.getName());
+				query.setParameter("birthDate", std.getBirthDate());
+				query.setParameter("birthPlace", std.getBirthPlace());
+				query.setParameter("sex", std.getSex());
+				query.setParameter("address", std.getAddress());
+				query.setParameter("phone", std.getPhone());
+				query.setParameter("email", std.getEmail());
+				query.setParameter("major", std.getMajor());
+				query.setParameter("startDate", std.getStartDate());
+				int result = query.executeUpdate();
+				System.out.println("Rows affected: " + result);
+			}
+
+			// commit transaction
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
 
 	public Student getStudent(long id) {
 
