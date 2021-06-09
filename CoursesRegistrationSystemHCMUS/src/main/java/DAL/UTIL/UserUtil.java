@@ -20,6 +20,7 @@ import DAL.POJO.Study;
 import DAL.POJO.Subject;
 import DAL.POJO.Teacher;
 import DAL.POJO.User;
+import DAL.POJO.regisCourse;
 public class UserUtil {
 
 	private static SessionFactory sessionFactory;

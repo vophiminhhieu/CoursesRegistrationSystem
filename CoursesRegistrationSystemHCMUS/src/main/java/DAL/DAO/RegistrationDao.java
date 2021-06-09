@@ -101,12 +101,12 @@ public class RegistrationDao {
 		}
 	}
 	public void offAll() {
+		CourseDao dao = new CourseDao();
+		dao.deleteAll();
 		List<Registration> l = getRegistration();
 		for(int i=0;i<l.size();i++) {
 			updateOFFRegistration(l.get(i));
 		}
-		CourseDao dao = new CourseDao();
-		dao.deleteAll();
 	}
 	
 	public void updateOFFRegistration(Registration std) {

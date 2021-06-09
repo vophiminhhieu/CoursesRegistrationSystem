@@ -2,6 +2,9 @@ package BUS;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import Application.Data;
@@ -39,6 +42,7 @@ public class Login {
 					MenuFrame mnfr=new MenuFrame();
 					data.id=Long.parseLong(fr.getUsername());
 					data.pass=fr.getPassword();
+					
 				}
 			}
 			
