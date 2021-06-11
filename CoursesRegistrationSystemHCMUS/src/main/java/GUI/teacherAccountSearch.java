@@ -51,6 +51,7 @@ public class teacherAccountSearch extends JPanel {
 	private JLabel emailLabel 		= new JLabel();	private JLabel majorLabel 		= new JLabel();
 	private JLabel startDateLabel 	= new JLabel();	private JLabel error 			= new JLabel("*");
 	private JLabel error1 			= new JLabel("*");
+	private JLabel log = new JLabel("Reset success. Pass: 123456");
 	private TeacherDao teacher = new TeacherDao();	private Teacher JTeacher = new Teacher();
 	private JTextField nameEdit = new JTextField();			private JPanel nameEditPanel = new JPanel(new BorderLayout());
 	private JTextField birthDateEdit = new JTextField();	private JPanel birthDateEditPanel = new JPanel(new BorderLayout());
@@ -116,6 +117,7 @@ public class teacherAccountSearch extends JPanel {
 	private ActionListener actionChangeSearch = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			set(textSearch.getText());
+			log.setVisible(false);
 		}
 	};
 	private ActionListener actionChangeRemove = new ActionListener() {
@@ -133,6 +135,7 @@ public class teacherAccountSearch extends JPanel {
 				userDao.deleteUser(_key);
 				showAll(false);
 			}
+			log.setVisible(false);
 		}
 	};
 	private ActionListener actionChangeReset = new ActionListener() {
@@ -154,6 +157,8 @@ public class teacherAccountSearch extends JPanel {
 			userDao.deleteUser(_key);
 			userDao.saveUser(user);
 			teacher.saveTeacher(tmp);
+			log.setBounds(155,35,100,20);
+			log.setVisible(true);
 		}
 	};
 	
@@ -208,6 +213,7 @@ public class teacherAccountSearch extends JPanel {
 				save();	teacher.deleteTeacher(JTeacher.getId());
 				teacher.saveTeacher(JTeacher);	set(""+JTeacher.getId());	setVisible(false);	setVisible(true);
 			}
+			log.setVisible(false);
 		}
 	};
 	public teacherAccountSearch(ActionListener obj) {
@@ -218,6 +224,6 @@ public class teacherAccountSearch extends JPanel {
 		add(nameEditPanel); add(birthDateEditPanel); add(birthPlaceEditPanel); add(sexEditPanel); add(phoneEditPanel);
 		add(addressEditPanel); add(emailEditPanel); add(startDateEditPanel); add(majorEditPanel);	showAll(false);
 		add(error);	add(error1); error.setVisible(false);error1.setVisible(false);	add(removeBtn);	add(resetBtn);
-		removeBtn.addActionListener(actionChangeRemove); resetBtn.addActionListener(actionChangeReset);
+		removeBtn.addActionListener(actionChangeRemove); resetBtn.addActionListener(actionChangeReset); add(log);
 	}
 }

@@ -61,22 +61,22 @@ public class GenerateInf extends JPanel {
 			idLabel.setText("Id                 : "+user.getId());	nameLabel.setText("Name         : "+user.getName());
 			birthDateLabel.setText("Birthdate   : "+user.getBirthDate());
 			birthPlaceLabel.setText("Birthplace : "+user.getBirthPlace());
-			sexLabel.setText(sexLabel.getText()+user.getSex());	addressLabel.setText(addressLabel.getText()+user.getAddress());
-			phoneLabel.setText(phoneLabel.getText()+user.getPhone());
-			emailLabel.setText(emailLabel.getText()+user.getEmail());
-			majorLabel.setText(majorLabel.getText()+user.getMajor());
-			startDateLabel.setText(startDateLabel.getText()+user.getStartDate());
+			sexLabel.setText("Sex: "+user.getSex());	addressLabel.setText("Address: "+user.getAddress());
+			phoneLabel.setText("Phone: "+user.getPhone());
+			emailLabel.setText("Email: "+user.getEmail());
+			majorLabel.setText("Major: "+user.getMajor());
+			startDateLabel.setText("StartDate: "+user.getStartDate());
 		}
 		else if(data.getRole().equals("Giao vien")) {
 			Teacher user = data.getTeacher();					roleLabel.setText("Teacher");	roleLabel.setFont(new Font("Verdana", Font.PLAIN, 24));
 			idLabel.setText("Id                 : "+user.getId());	nameLabel.setText("Name         : "+user.getName());
 			birthDateLabel.setText("Birthdate   : "+user.getBirthDate());
 			birthPlaceLabel.setText("Birthplace : "+user.getBirthPlace());
-			sexLabel.setText(sexLabel.getText()+user.getSex());	addressLabel.setText(addressLabel.getText()+user.getAddress());
-			phoneLabel.setText(phoneLabel.getText()+user.getPhone());
-			emailLabel.setText(emailLabel.getText()+user.getEmail());
-			majorLabel.setText(majorLabel.getText()+user.getMajor());
-			startDateLabel.setText(startDateLabel.getText()+user.getStartDate());
+			sexLabel.setText("Sex: "+user.getSex());	addressLabel.setText("Address: "+user.getAddress());
+			phoneLabel.setText("Phone: "+user.getPhone());
+			emailLabel.setText("Email: "+user.getEmail());
+			majorLabel.setText("Major: "+user.getMajor());
+			startDateLabel.setText("StartDate: "+user.getStartDate());
 		}
 	}
 	@Override

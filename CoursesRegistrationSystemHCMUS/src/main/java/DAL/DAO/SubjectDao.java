@@ -37,6 +37,8 @@ public class SubjectDao {
 
 	public void deleteSubject(String id) {
 
+		CourseDao dao = new CourseDao();
+		dao.deleteCourse(id);
 		Transaction transaction = null;
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
 			// start a transaction
@@ -60,8 +62,6 @@ public class SubjectDao {
 			}
 			e.printStackTrace();
 		}
-		CourseDao dao = new CourseDao();
-		dao.deleteCourse(id);
 	}
 
 	public Subject getSubject(String id) {

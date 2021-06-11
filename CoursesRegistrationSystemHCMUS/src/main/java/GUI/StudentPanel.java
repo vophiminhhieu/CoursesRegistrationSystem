@@ -45,10 +45,8 @@ public class StudentPanel extends JPanel {
 			if(e.getActionCommand().equals("Back")) {	remove(Student_Regis);	add(leftCenterPanel);	}
 			else if(e.getActionCommand().equals("regis")) {	remove(leftCenterPanel);	remove(Student_Regis);
 			Student_Regis = new studentRegisRegis(actionChangeRegis);	add(Student_Regis); }
-			//else if(e.getActionCommand().equals("add")) {	remove(leftCenterPanel);	remove(teacher_Course);
-			//teacher_Course = new teacherCourseAdd(actionChangeCourse);		add(teacher_Course);}
-			//else if(e.getActionCommand().equals("find")) {	remove(leftCenterPanel);	remove(teacher_Course);
-			//teacher_Course = new teacherCourseFind(actionChangeCourse);		add(teacher_Course);}
+			else if(e.getActionCommand().equals("class")) {	remove(leftCenterPanel);	remove(Student_Regis);
+			Student_Regis = new studentRegisClass(actionChangeRegis);		add(Student_Regis);}
 			setVisible(false);		setVisible(true);
 		
 		}

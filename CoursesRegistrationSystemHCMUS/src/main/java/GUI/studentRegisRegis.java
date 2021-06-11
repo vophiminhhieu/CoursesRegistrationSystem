@@ -70,14 +70,7 @@ public class studentRegisRegis extends JPanel {
         panel.setLayout(null);
         return panel;
     }
-	private void prepareGUI() {
-		backBtn.setBounds(400, 200, 95, 29);	backBtn.setActionCommand("Back");
-		frame.setLayout(null);
-        frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        frame.setLocation(200,80);
-        frame.setTitle("Registration Course");
-        frame.pack();
-        frame.setSize(800,600);
+	private void checkTime() {
 		Date date = new Date();
 		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		RegistrationDao resDao = new RegistrationDao();
@@ -92,6 +85,7 @@ public class studentRegisRegis extends JPanel {
 		}
 		if(a==false) {
 			 background = new ImageIcon("image/Menu/expired.png");
+			 frame.setVisible(false);
 			 setVisible(false);
 			 setVisible(true);
 		}
@@ -100,20 +94,28 @@ public class studentRegisRegis extends JPanel {
 				Date datee = new SimpleDateFormat("dd/MM/yyyy").parse(end);
 				if(datee.compareTo(date)<0) {
 					 background = new ImageIcon("image/Menu/expired.png");
+					 frame.setVisible(false);
 					 setVisible(false);
 					 setVisible(true);
 					 return;
 				}
-				else {
-					on();
-				}
 				
 			}
 			catch(Exception ex){
-				
 			}
-			
+			on();
 		}
+		
+	}
+	private void prepareGUI() {
+		backBtn.setBounds(400, 200, 95, 29);	backBtn.setActionCommand("Back");
+		frame.setLayout(null);
+        frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        frame.setLocation(200,80);
+        frame.setTitle("Registration Course");
+        frame.pack();
+        frame.setSize(800,600);
+		checkTime();
 	}
 
 	private void on() {
@@ -136,12 +138,13 @@ public class studentRegisRegis extends JPanel {
 			String timeM = resCour.get(i).getTime();
 			String timeD = resCour.get(i).getDay();
 			String IDS = resCour.get(i).getIdSubject();
-			stdPk.setIdSubject(resCour.get(i).getIdSubject());
+			stdPk.setIdSubject(IDS);
 			if(studyDao.getStudy(stdPk)==null) {
 				JPanel cell = new JPanel();	cell.setLayout(null); cell.setBounds(10,30*leg+20,785,25); leg++;
 				Icon ic = new ImageIcon("image/Menu/Teacher/Student/check.png"); JButton btn = new JButton(ic);	btn.setBounds(0,5,14,14);
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						checkTime();
 						if(stdList.size()==8) {
 							JOptionPane.showMessageDialog(frame," Not More Than 8 Course !!");
 						}
@@ -167,8 +170,6 @@ public class studentRegisRegis extends JPanel {
 								 studyDao.saveStudy(std);
 								 System.out.print("-------------------------"+IDS);
 								 on();
-								 frame.setVisible(false);
-								 frame.setVisible(true);
 							}
 							else {
 								JOptionPane.showMessageDialog(frame," Coincident Time !! ");
@@ -213,6 +214,7 @@ public class studentRegisRegis extends JPanel {
 			JLabel id = new JLabel(stdList.get(i).getPk().getIdSubject());
 			JLabel name = new JLabel(courList.get(i).getNameSubject());
 			JLabel credits = new JLabel(String.valueOf(courList.get(i).getCredits()));
+			
 			JLabel nameClass = new JLabel(courList.get(i).getNameClass());
 			JLabel idTeacher = new JLabel(courList.get(i).getIdTeacher());
 			JLabel nameTeacher = new JLabel(courList.get(i).getNameTeacher());
@@ -252,6 +254,18 @@ public class studentRegisRegis extends JPanel {
 			cell.add(time);
 			cell.add(btn);
 			panel.add(cell);
+			String tmpp = stdList.get(i).getPk().getIdSubject();
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					checkTime();
+					Study.Pk nPk = new Study.Pk();
+					nPk.setIdStudent(data.id);
+					nPk.setIdSubject(tmpp);
+					studyDao.deleteStudy(nPk);
+					on();
+					
+				}
+			});
 		}
 		
         frame.setContentPane(panel);

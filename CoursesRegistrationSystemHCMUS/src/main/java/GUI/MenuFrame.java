@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Application.Data;
+import BUS.Login;
+import DAL.POJO.Student;
+import DAL.POJO.Teacher;
 
 public class MenuFrame extends JFrame {
 	private Data data=new Data();
@@ -37,6 +40,8 @@ public class MenuFrame extends JFrame {
     private Icon manageBtnImage=new ImageIcon("image/Menu/buttonManage.png");
     private Icon manageBtnImageLight=new ImageIcon("image/Menu/buttonManageLight.jpg");
     private JButton manageBtn = new JButton(manageBtnImageLight);
+    private Icon log = new ImageIcon("image/Menu/log.png");
+    private JButton logOut = new JButton(log);
     private JPanel paintToPanel(String namepath){
         ImageIcon background = new ImageIcon(namepath);
         JPanel panel = new JPanel(){
@@ -86,6 +91,15 @@ public class MenuFrame extends JFrame {
 			CenterPanel.setVisible(false);	CenterPanel.setVisible(true);
 		}
 	};
+	private ActionListener logAction = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			Student std = new Student();
+			Teacher tch = new Teacher();
+			data.setRole(""); data.setStudent(std); data.setTeacher(tch);
+			setVisible(false);
+			Login lg = new Login();
+		}
+	};
     public void eventLightButton(ActionListener obj) {
     	dashboardBtn.addActionListener(obj);
     	teacherBtn.addActionListener(obj);
@@ -101,6 +115,7 @@ public class MenuFrame extends JFrame {
 		teacherBtn.setBounds(190,95,128,80);			teacherBtn.setActionCommand("teacher");
 		studentBtn.setBounds(320,95,128,80);			studentBtn.setActionCommand("student");
 		manageBtn.setBounds(450,95,128,80);				manageBtn.setActionCommand("manage");
+		logOut.setBounds(700,15,50,25); 
 		dashboardPanel.setBounds(29, 188, 300, 48);		teacherPanel.setBounds(29, 188, 300, 48);
 		studentPanel.setBounds(29, 188, 300, 48);		managePanel.setBounds(29, 188, 300, 48);
 		
@@ -109,8 +124,8 @@ public class MenuFrame extends JFrame {
 		prepareGUI();
 		setContentPane(contentPanel);	CenterPanel.add(dashboardCenterPanel);	add(CenterPanel);
 		add(dashboardBtn);		add(teacherBtn);	add(studentBtn);	add(manageBtn); 	
-		add(dashboardPanel);	add(teacherPanel);	add(studentPanel);	add(managePanel);
-		eventLightButton(LightDarkButton);
+		add(dashboardPanel);	add(teacherPanel);	add(studentPanel);	add(managePanel);add(logOut);
+		eventLightButton(LightDarkButton); logOut.addActionListener(logAction);
 		setVisible(true);
 	}
 }

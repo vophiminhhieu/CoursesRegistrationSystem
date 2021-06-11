@@ -15,9 +15,7 @@ public class savePasswordChange {
 	UserDao userDao=new UserDao();
 
 	public void save() {
-		User user = new User(data.id,newPassword);
-		userDao.deleteUser(data.id);
-		userDao.saveUser(user);
+		userDao.updateDao(data.id, newPassword);
 	}
 	public savePasswordChange(String _old,String _new,String _retype){
 		oldPassword=_old;

@@ -42,7 +42,6 @@ public class Login {
 					MenuFrame mnfr=new MenuFrame();
 					data.id=Long.parseLong(fr.getUsername());
 					data.pass=fr.getPassword();
-					
 				}
 			}
 			

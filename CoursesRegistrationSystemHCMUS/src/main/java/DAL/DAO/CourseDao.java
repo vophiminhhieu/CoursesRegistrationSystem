@@ -36,7 +36,6 @@ public class CourseDao {
 	}
 
 	public void deleteCourse(String idSubject) {
-
 		Transaction transaction = null;
 		try (Session session = UserUtil.getSessionFactory().openSession()) {
 			// start a transaction
